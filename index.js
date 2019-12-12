@@ -1,16 +1,39 @@
-function fetchBooks() {
+window.addEventListener("DOMContentLoaded", (event)=> { 
+  
 
-}
 
-function renderBooks(json) {
-  const main = document.querySelector('main')
-  json.forEach(book => {
-    const h2 = document.createElement('h2')
-    h2.innerHTML = `<h2>${book.name}</h2>`
-    main.appendChild(h2)
-  })
-}
+  fetch('https://anapioficeandfire.com/api/books')
+  .then(resp => resp.json())
+  .then(json =>  {printBookTitles(json), printTotalPages(json)});
 
-document.addEventListener('DOMContentLoaded', function() {
-  fetchBooks()
-})
+ 
+  
+
+  
+
+  let main = document.querySelector('main')
+
+  function printBookTitles(booksArray) {
+    booksArray.forEach(book => {
+      p = document.createElement('p');
+      p.innerText = `${book.name}`
+      main.appendChild(p)
+      }); 
+  }
+
+  totalPages = document.querySelector('h3.total')
+ 
+  function printTotalPages(booksArray) {
+    total = 0
+    booksArray.forEach(book => {
+      total += parseInt(`${book.numberOfPages}`)
+    })
+    console.log(total)
+    p = document.createElement('p') 
+    p.innerText = `${total}`
+    totalPages.appendChild(p)
+  }
+
+ 
+
+});
